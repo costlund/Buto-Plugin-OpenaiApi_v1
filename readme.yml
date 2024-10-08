@@ -1,0 +1,61 @@
+readme:
+  name: Buto-Plugin-OpenaiApi_v1
+  date: '2024-10-08'
+  description: |
+    This plugin is for testing purpose agains api on server api.openai.com.
+  item:
+    -
+      name: Settings
+      description: |
+        Put param api_key in this file.
+        ````
+        plugin:
+          openai:
+            api_v1:
+              settings: 'yml:/../buto_data/theme/[theme]/openai_api_v1.yml'
+        ````
+    -
+      name: Usage
+      description: |
+        - Set up api key.
+        - Add a page with test widget.
+        - Edit widget data to test api.
+    -
+      name: Widgets
+      item:
+        -
+          name: widget_test
+          description: |
+            Widget to test api.
+            Change data for every new test.
+            ````
+            type: widget
+            data:
+              plugin: openai/api_v1
+              method: test
+              data:
+                model: gpt-3.5-turbo
+                messages:
+                  -
+                    role: system
+                    content: 'You are a helpful assistant.'
+                  -
+                    role: user
+                    content: 'Who is Donald Trump?'
+                max_tokens: 100
+                temperature: 0.7
+            ````
+    -
+      name: Construct
+      item:
+        -
+          name: __construct
+          description: |
+            Handle settings.
+    -
+      name: Methods
+      item:
+        -
+          name: log
+          description: |
+            Log file /log/990101.yml to buto_data theme folder.
