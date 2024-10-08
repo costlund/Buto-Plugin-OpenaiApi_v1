@@ -2,8 +2,17 @@
 class PluginOpenaiApi_v1{
   public $settings;
   function __construct(){
+    /**
+     * 
+     */
     $this->settings = wfPlugin::getPluginSettings('openai/api_v1', true);
+    /**
+     * 
+     */
     $this->settings->set('settings', wfSettings::getSettingsFromYmlString($this->settings->get('settings')));
+    /**
+     * 
+     */
     if(!$this->settings->get('settings/api_key')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Api key is not set!');
     }
@@ -33,7 +42,7 @@ class PluginOpenaiApi_v1{
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param temperature is not set!');
     }
     /**
-     * 
+     * url
      */
     $url = 'https://api.openai.com/v1/chat/completions';
     /**
@@ -56,12 +65,10 @@ class PluginOpenaiApi_v1{
      * 
      */
     if(curl_errno($ch)){
-      //echo 'Error: '.curl_error($ch);
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'curl_error' => curl_error($ch)));
     }else{
       $response_data = json_decode($response, true);
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'request' => $data->get(), 'response' => $response_data));
-      //wfHelp::print($response_data, true);
     }
     curl_close($ch);
   }
