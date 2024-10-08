@@ -32,7 +32,6 @@ class PluginOpenaiApi_v1{
     if(!$data->get('data/temperature')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param temperature is not set!');
     }
-    //wfHelp::print($data, true);
     /**
      * 
      */
