@@ -26,19 +26,30 @@ class PluginOpenaiApi_v1{
      * 
      */
     $data = new PluginWfArray($data);
+    if(!$data->get('data')){
+      throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: No data is set!');
+    }
     /**
      * 
      */
-    if(!$data->get('data/model')){
+    wfHelp::print($data->get('data'));
+    wfHelp::print($this->api_chat_completions($data->get('data')));
+  }
+  public function api_chat_completions($data){
+    $data = new PluginWfArray($data);
+    /**
+     * 
+     */
+    if(!$data->get('model')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param model is not set!');
     }
-    if(!$data->get('data/messages')){
+    if(!$data->get('messages')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param messages is not set!');
     }
-    if(!$data->get('data/max_tokens')){
+    if(!$data->get('max_tokens')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param max_tokens is not set!');
     }
-    if(!$data->get('data/temperature')){
+    if(!$data->get('temperature')){
       throw new Exception(__CLASS__.'::'.__FUNCTION__.' says: Param temperature is not set!');
     }
     /**
@@ -59,11 +70,12 @@ class PluginOpenaiApi_v1{
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data->get('data')));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data->get()));
     $response = curl_exec($ch);
     /**
      * 
      */
+    $response_data = array();
     if(curl_errno($ch)){
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'curl_error' => curl_error($ch)));
     }else{
@@ -71,12 +83,12 @@ class PluginOpenaiApi_v1{
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'request' => $data->get(), 'response' => $response_data));
     }
     curl_close($ch);
+    return $response_data;
   }
   private function log($data){
     $yml = new PluginWfYml($this->settings->get('settings/log_file'));
     $yml->set('log/', $data);
     $yml->save();
-    wfHelp::print($data);
     return null;
   }
 }
