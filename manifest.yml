@@ -1,5 +1,9 @@
-version: 1.0.0
+version: 1.0.1
 history:
+  1.0.1:
+    date: '2024-10-17'
+    title: 'Save'
+    description: 'Handle settings to be able to save php code.'
   1.0.0:
     date: '2024-10-08'
     title: 'First version'

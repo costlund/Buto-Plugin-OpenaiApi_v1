@@ -86,6 +86,7 @@ class PluginOpenaiApi_v1{
     return $response_data;
   }
   private function log($data){
+    wfSettings::$safe_mode = false;
     $yml = new PluginWfYml($this->settings->get('settings/log_file'));
     $yml->set('log/', $data);
     $yml->save();
