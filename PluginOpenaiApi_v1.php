@@ -19,7 +19,7 @@ class PluginOpenaiApi_v1{
     /**
      * log_file
      */
-    $this->settings->set('settings/log_file', wfGlobals::getAppDir().'/../buto_data/theme/[theme]/log/'.date('ymd').'.yml');
+    $this->settings->set('settings/log_file', wfGlobals::getAppDir().'/../buto_data/theme/[theme]/openai_log/'.date('ymd').'.yml');
   }
   public function widget_test($data){
     /**
@@ -33,7 +33,10 @@ class PluginOpenaiApi_v1{
      * 
      */
     wfHelp::print($data->get('data'));
-    wfHelp::print($this->api_chat_completions($data->get('data')));
+    $response = $this->api_chat_completions($data->get('data'));
+    $response = new PluginWfArray($response);
+    wfHelp::print($response->get('choices/0/message/content'));
+    wfHelp::print($response);
   }
   public function api_chat_completions($data){
     $data = new PluginWfArray($data);

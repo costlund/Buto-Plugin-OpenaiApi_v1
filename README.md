@@ -11,6 +11,8 @@
   openai:
     api_v1:
       settings: 'yml:/../buto_data/theme/[theme]/openai_api_v1.yml'</code></pre>
+<p>In settings file.</p>
+<pre><code>api_key: _my_api_key_</code></pre>
 
 <a name="key_1"></a>
 
