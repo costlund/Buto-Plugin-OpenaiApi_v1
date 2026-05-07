@@ -6,6 +6,8 @@
 
 ## Settings
 
+
+
 <p>Put param api_key in this file.</p>
 <pre><code>plugin:
   openai:
@@ -17,6 +19,8 @@
 <a name="key_1"></a>
 
 ## Usage
+
+
 
 <ul>
 <li>Set up api key.</li>
@@ -30,9 +34,13 @@
 
 
 
+
+
 <a name="key_2_0"></a>
 
 ### widget_test
+
+
 
 <p>Widget to test api.
 Change data for every new test.</p>
@@ -58,9 +66,13 @@ data:
 
 
 
+
+
 <a name="key_3_0"></a>
 
 ### __construct
+
+
 
 <p>Handle settings.</p>
 
@@ -70,9 +82,13 @@ data:
 
 
 
+
+
 <a name="key_4_0"></a>
 
 ### log
+
+
 
 <p>Log file /log/990101.yml to buto_data theme folder.</p>
 
