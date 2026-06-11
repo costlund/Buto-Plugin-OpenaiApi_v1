@@ -1,5 +1,9 @@
-version: 1.1.0
+version: 1.2.0
 history:
+  1.2.0:
+    date: '2026-06-11'
+    title: 'Db'
+    description: 'Using plugin openai/db to put data into database.'
   1.1.0:
     date: '2025-12-09'
     title: 'Log'
@@ -12,7 +16,10 @@ history:
     date: '2024-10-08'
     title: 'First version'
     description: 'First version. Manifest created.'
-plugin: {  }
+plugin:
+  -
+    name: openai/db
+    version: 1.0.0
 sys:
   -
     name: mercury

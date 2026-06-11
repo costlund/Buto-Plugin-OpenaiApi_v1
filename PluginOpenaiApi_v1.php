@@ -1,6 +1,7 @@
 <?php
 class PluginOpenaiApi_v1{
   public $settings;
+  private $db;
   function __construct(){
     /**
      * 
@@ -20,6 +21,11 @@ class PluginOpenaiApi_v1{
      * log_file
      */
     $this->settings->set('settings/log_file', wfGlobals::getAppDir().'/../buto_data/theme/[theme]/openai_log/'.date('ymd').'.yml');
+    /**
+     * db
+     */
+    wfPlugin::includeonce('openai/db');
+    $this->db = new PluginOpenaiDb();
   }
   public function widget_test($data){
     /**
@@ -38,7 +44,28 @@ class PluginOpenaiApi_v1{
     wfHelp::print($response->get('choices/0/message/content'));
     wfHelp::print($response);
   }
-  public function api_chat_completions($data){
+  public function api_chat_completions($data, $tag = null){
+    /**
+     * tag
+     */
+    if($tag){
+      /**
+       * If tag and db record we skip api request.
+       */
+      $db_data = $this->db->db_openai_chat_select_one_by_tag($tag);
+      if($db_data->get('id')){
+        $response = $db_data->get('response');
+        $response = sfYaml::load($response);
+        $response['db']['id'] = $db_data->get('id');
+        $response['db']['tag'] = $db_data->get('tag');
+        $response['db']['created_at'] = $db_data->get('created_at');
+        $response['db']['request'] = sfYaml::load($db_data->get('request'));
+        return $response;
+      }
+    }
+    /**
+     * 
+     */
     $data = new PluginWfArray($data);
     /**
      * 
@@ -83,7 +110,15 @@ class PluginOpenaiApi_v1{
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'curl_error' => curl_error($ch)));
     }else{
       $response_data = json_decode($response, true);
+      $response_data['db']['created_at'] = date('Y-m-d H:i:s');
+      /**
+       * log
+       */
       $this->log(array('datetime' => date('Y-m-d H:i:s'), 'request' => $data->get(), 'response' => $response_data));
+      /**
+       * db, insert
+       */
+      $this->db->db_openai_chat_insert(sfYaml::dump($data->get(), 99), sfYaml::dump($response_data, 99), $tag);
     }
     curl_close($ch);
     return $response_data;
