@@ -1,6 +1,6 @@
 # Buto-Plugin-OpenaiApi_v1
 
-<p>This plugin is for testing purpose agains api on server api.openai.com.</p>
+<p>API for api.openai.com.</p>
 
 <a name="key_0"></a>
 
@@ -22,11 +22,58 @@
 
 
 
-<ul>
-<li>Set up api key.</li>
-<li>Add a page with test widget.</li>
-<li>Edit widget data to test api.</li>
-</ul>
+<p>Data.</p>
+<pre><code>model: gpt-3.5-turbo
+messages:
+  -
+    role: user
+    content: "How old is the world!"
+max_tokens: 1000
+temperature: 0.7</code></pre>
+<p>PHP.</p>
+<pre><code>$ai = new PluginOpenaiApi_v1();
+$response = $ai-&gt;api_chat_completions($data, 'my_request_tag_optional');</code></pre>
+<p>Result.</p>
+<pre><code>id: chat-id
+object: chat.completion
+created: 1783012530
+model: gpt-3.5-turbo-0125
+choices:
+  -
+    index: 0
+    message:
+      role: assistant
+      content: 'The Earth is approximately 4.5 billion years old.'
+      refusal: null
+      annotations: {  }
+    logprobs: null
+    finish_reason: stop
+usage:
+  prompt_tokens: 13
+  completion_tokens: 12
+  total_tokens: 25
+  prompt_tokens_details:
+    cached_tokens: 0
+    audio_tokens: 0
+  completion_tokens_details:
+    reasoning_tokens: 0
+    audio_tokens: 0
+    accepted_prediction_tokens: 0
+    rejected_prediction_tokens: 0
+service_tier: default
+system_fingerprint: null
+db:
+  created_at: '2026-07-02 19:15:32'
+  id: 2836000036a469cb4033ba375103454
+  tag: my_request_tag_optional
+  request:
+    model: gpt-3.5-turbo
+    messages:
+      -
+        role: user
+        content: 'How old is the world!'
+    max_tokens: 1000
+    temperature: 0.7</code></pre>
 
 <a name="key_2"></a>
 
